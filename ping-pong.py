@@ -1,6 +1,8 @@
 from pygame import *
 from random import randint
 font.init()
+font1 = font.Font(None,35)
+
 
 class GameSprite(sprite.Sprite):
     def __init__(self, player_image, player_speed, player_x, player_y,size_x,size_y):
@@ -24,9 +26,9 @@ class Player(GameSprite):
 
     def update_r(self):
         keys = key.get_pressed()
-        if keys[K_UP] and self.rect.y > 0:
+        if keys[K_w] and self.rect.y > 0:
             self.rect.y -= self.speed
-        if keys[K_DOWN] and self.rect.y < 300:
+        if keys[K_s] and self.rect.y < 300:
             self.rect.y += self.speed
 
 
@@ -48,11 +50,15 @@ FPS = 60
 speed_x = 3
 speed_y = 3
 
+score1 = 0
+score2 = 0
+max_score = 3
+match_over = False
 
 finish = False
 run = True
 
-
+score_text = font1.render(str(score1)+ ' : ' + str(score2),True,(0,0,0))
 
 while run == True:
     for event1 in event.get(): #перебераем очередь событий
@@ -66,6 +72,7 @@ while run == True:
     ball.reset()
 
     if finish != True:
+        window.blit(score_text,(310,220))
         ball.rect.x += speed_x
         ball.rect.y += speed_y
     if ball.rect.y > 450 or ball.rect.y <0:
@@ -77,4 +84,3 @@ while run == True:
 
     display.update()
     clock.tick(FPS)
-
