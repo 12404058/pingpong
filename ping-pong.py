@@ -24,9 +24,9 @@ class Player(GameSprite):
 
     def update_r(self):
         keys = key.get_pressed()
-        if keys[K_UP] and self.rect.y > 0:
+        if keys[K_w] and self.rect.y > 0:
             self.rect.y -= self.speed
-        if keys[K_DOWN] and self.rect.y < 300:
+        if keys[K_s] and self.rect.y < 300:
             self.rect.y += self.speed
 
 
@@ -36,25 +36,45 @@ window = display.set_mode((700,500))
 display.set_caption('ping-pong')
 window.fill(white)
 
-pl1 = Player('platform_l.jpg',10,40,0,100,200)
-pl2 = Player('platform_r.jpg',10,570,0,100,200)
-ball = GameSprite('tennis_ball.jpg',3,310,230,65,50)
+pl1 = Player('platform_l.png',10,40,0,50,200)
+pl2 = Player('platform_r.png',10,595,0,50,200)
+ball = GameSprite('tennis_ball.png',3,315,230,50,50)
 
 
 clock = time.Clock()        #отслеживает частоту кадров в секунду
 FPS = 60            
 
+
+speed_x = 3
+speed_y = 3
+
+
+finish = False
 run = True
+
+
 
 while run == True:
     for event1 in event.get(): #перебераем очередь событий
         if event1.type == QUIT: #проверка на закрытие окна
             run = False
+    window.fill(white)
     pl1.reset()
     pl1.update_l()
     pl2.reset()
     pl2.update_r()
     ball.reset()
 
+    if finish != True:
+        ball.rect.x += speed_x
+        ball.rect.y += speed_y
+    if ball.rect.y > 450 or ball.rect.y <0:
+        speed_y *= -1
+    if sprite.collide_rect(pl1, ball) or sprite.collide_rect(pl2, ball):
+        speed_x *= -1.01
+
+
+
     display.update()
     clock.tick(FPS)
+
