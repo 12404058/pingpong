@@ -38,6 +38,7 @@ window.fill(white)
 
 pl1 = Player('platform_l.jpg',10,40,0,100,200)
 pl2 = Player('platform_r.jpg',10,570,0,100,200)
+ball = GameSprite('tennis_ball.jpg',3,310,230,65,50)
 
 
 clock = time.Clock()        #отслеживает частоту кадров в секунду
@@ -53,6 +54,7 @@ while run == True:
     pl1.update_l()
     pl2.reset()
     pl2.update_r()
+    ball.reset()
 
     display.update()
     clock.tick(FPS)
